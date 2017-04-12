@@ -1,0 +1,20 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Registro de Usuario</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+    <ion-item>
+      <ion-input placeholder = 'Nombre' [(ngModel)]="usuario.nombre"></ion-input>
+    </ion-item>
+    <div padding>
+	    <button ion-button round color = "secondary" (click) = "RegistrarUsuario()">Registrar</button>
+      <button ion-button round color = "danger" (click) = "Cancelar()">Cancelar</button>
+    </div>
+
+</ion-content>

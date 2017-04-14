@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
-import { UsuarioLogin } from '../login/login';
+import { Usuario } from '../login/login';
 
 @Component({
   selector: 'page-registro',
@@ -9,10 +9,11 @@ import { UsuarioLogin } from '../login/login';
 })
 export class RegistroPage {
 
-  usuario: UsuarioLogin = new UsuarioLogin();
+  usuario : Usuario;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) 
   {
+    this.usuario = navParams.get('Usuario');
   }
 
   ionViewDidLoad() {

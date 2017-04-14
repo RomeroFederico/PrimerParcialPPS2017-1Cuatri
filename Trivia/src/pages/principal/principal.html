@@ -1,0 +1,20 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Pagina Principal ({{usuario.nombre}})</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <div padding>
+    <button ion-button block color = "secondary" (click) = "MostrarJugar()">Jugar</button> 
+    <button ion-button block color = "secondary" (click) = "MostrarDatos()">Datos del Jugador</button>
+    <button ion-button block color = "secondary" (click) = "MostrarResultados()">Ultimas Partidas</button>
+    <button ion-button block color = "secondary" (click) = "MostrarAbout()">Acerca de</button>
+    <button ion-button block color = "secondary" (click) = "Logout()">Logout</button>
+  </div>
+
+</ion-content>

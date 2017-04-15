@@ -6,6 +6,7 @@ import { LoginPage } from '../pages/login/login';
 import { RegistroPage} from '../pages/registro/registro';
 import { PrincipalPage} from '../pages/principal/principal';
 import { AboutPage} from '../pages/about/about';
+import { JuegoPage } from '../pages/juego/juego';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -16,7 +17,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     LoginPage,
     RegistroPage,
     PrincipalPage,
-    AboutPage
+    AboutPage,
+    JuegoPage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -27,7 +29,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     LoginPage,
     RegistroPage,
     PrincipalPage,
-    AboutPage
+    AboutPage,
+    JuegoPage
   ],
   providers: [
     StatusBar,

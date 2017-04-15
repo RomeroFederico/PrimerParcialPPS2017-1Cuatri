@@ -1,0 +1,30 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Pregunta #{{preguntaActual + 1}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <ion-card align = 'right'>
+    <ion-card-content class = 'txtPregunta'>
+      {{jugador.nombre}}, Puntaje : {{puntaje}}
+    </ion-card-content> 
+  </ion-card>
+
+  <ion-card align = 'center' class = 'cardPregunta'>
+    <ion-card-content>
+      {{preguntas[preguntaActual].pregunta}}
+    </ion-card-content> 
+  </ion-card>
+
+  <ion-list *ngFor="let respuesta of preguntas[preguntaActual].respuestas; let i=index">
+
+    <button ion-button block color = "primary" disabled={{inhabilitarBotones}} (click) = "Seleccion(i)">{{respuesta}}</button>
+
+  </ion-list>
+
+</ion-content>

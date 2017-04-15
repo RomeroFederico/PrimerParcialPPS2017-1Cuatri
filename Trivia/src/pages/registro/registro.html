@@ -10,7 +10,8 @@
 <ion-content padding>
 
     <ion-item>
-      <ion-input placeholder = 'Nombre' [(ngModel)]="usuario.nombre"></ion-input>
+      <ion-label stacked>Nombre</ion-label>
+      <ion-input type="text" [(ngModel)]="usuario.nombre"></ion-input>
     </ion-item>
     <div padding>
 	    <button ion-button round color = "secondary" (click) = "RegistrarUsuario()">Registrar</button>

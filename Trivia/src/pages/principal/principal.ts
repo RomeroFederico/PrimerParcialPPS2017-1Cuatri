@@ -6,7 +6,7 @@ import { AboutPage } from '../about/about';
 import { LoginPage } from '../login/login';
 import { JuegoPage } from '../juego/juego';
 
-import { Usuario } from '../login/login';
+import { Jugador } from '../login/login';
 
 @Component({
   selector: 'page-principal',
@@ -15,11 +15,11 @@ import { Usuario } from '../login/login';
 })
 export class PrincipalPage {
 
-  usuario : Usuario;
+  jugador : Jugador;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: AlertController) 
   {
-    this.usuario = navParams.get('Usuario');
+    this.jugador = navParams.get('Jugador');
   }
 
   ionViewDidLoad() {
@@ -28,7 +28,7 @@ export class PrincipalPage {
 
   MostrarJugar() : void {
     this.navCtrl.push(JuegoPage, {
-      jugador : this.usuario,
+      Jugador : this.jugador,
     });
   }
 

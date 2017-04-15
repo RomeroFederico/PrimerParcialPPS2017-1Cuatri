@@ -7,6 +7,7 @@ import { RegistroPage} from '../pages/registro/registro';
 import { PrincipalPage} from '../pages/principal/principal';
 import { AboutPage} from '../pages/about/about';
 import { JuegoPage } from '../pages/juego/juego';
+import { ResultadoPage } from '../pages/resultado/resultado';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -18,7 +19,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     RegistroPage,
     PrincipalPage,
     AboutPage,
-    JuegoPage
+    JuegoPage,
+    ResultadoPage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -30,7 +32,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     RegistroPage,
     PrincipalPage,
     AboutPage,
-    JuegoPage
+    JuegoPage,
+    ResultadoPage
   ],
   providers: [
     StatusBar,

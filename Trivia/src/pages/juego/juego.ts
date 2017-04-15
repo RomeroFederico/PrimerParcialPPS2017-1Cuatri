@@ -3,7 +3,9 @@ import { NavController, NavParams } from 'ionic-angular';
 
 import { ToastController } from 'ionic-angular';
 
-import { Usuario } from '../login/login';
+import { ResultadoPage } from '../resultado/resultado';
+
+import { Jugador } from '../login/login';
 
 export class Pregunta
 {
@@ -19,8 +21,8 @@ export class Pregunta
 
 export class JuegoPage {
 
-  jugador : Usuario;
-  puntaje : number;
+  jugador : Jugador;
+  puntajePartida : number;
   preguntas : Array <Pregunta>;
   preguntaActual : number;
 
@@ -28,8 +30,8 @@ export class JuegoPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController)
   {
-    this.jugador = navParams.get('jugador');
-    this.puntaje = 0;
+    this.jugador = navParams.get('Jugador');
+    this.puntajePartida = 0;
     this.preguntas = new Array<Pregunta>();
 
     // Traer preguntas de la base de datos.
@@ -55,20 +57,30 @@ export class JuegoPage {
 
     if (opcion == this.preguntas[this.preguntaActual].correcta)
     {
-      this.puntaje++;
+      this.puntajePartida++;
       console.log("Correcto");
       toast.setMessage("Correcto");
     }
     else
     {
       console.log("Incorrecto");
-      toast.setMessage("Inorrecto");
+      toast.setMessage("Incorrecto");
     }
 
     toast.onDidDismiss(() => {
 
       if (this.preguntaActual == 2)
+      {
         console.log("Juego Terminado");
+        this.navCtrl.setRoot(ResultadoPage, {
+          Jugador : this.jugador,
+          Puntaje : this.puntajePartida,
+          Tiempo : 0
+        }, {
+          animate: true, 
+          direction: "forward"
+        });    
+      }
       else
       {
         this.inhabilitarBotones = null;

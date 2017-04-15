@@ -4,8 +4,11 @@ import { AlertController } from 'ionic-angular';
 import { RegistroPage } from '../registro/registro';
 import { PrincipalPage } from '../principal/principal';
 
-export class Usuario {
-    constructor(public nombre : string = "")
+export class Jugador {
+    constructor(public idJugador : number = 1, public nombre : string = "", 
+                public puntaje : number = 0, public partidasJugadas : number = 0,
+                public respCorrectas : number = 0, public respIncorrectas : number = 0,
+                public imagen : string = "")
     {}
 }
 
@@ -16,7 +19,7 @@ export class Usuario {
 })
 export class LoginPage {
 
-  usuario: Usuario = new Usuario();
+  jugador: Jugador = new Jugador();
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: AlertController)
   {
@@ -31,7 +34,7 @@ export class LoginPage {
   {
     console.log("Iniciando Sesion");  // Acceso a Pagina Principal.
     this.navCtrl.setRoot(PrincipalPage, {
-      Usuario : this.usuario
+      Jugador : this.jugador
     }, {
       animate: true, 
       direction: "forward"
@@ -52,13 +55,13 @@ export class LoginPage {
   Registrar(): void 
   {
     this.navCtrl.push(RegistroPage, {
-      Usuario : this.usuario
+      Jugador : this.jugador
     });
   }
 
   ValidarUsuario(): boolean       // Conexion con el servidor.
   {
-    if (this.usuario.nombre == 'usuario' || this.usuario.nombre == 'federico')
+    if (this.jugador.nombre == 'usuario' || this.jugador.nombre == 'federico')
       return true; 
     return false;
   }

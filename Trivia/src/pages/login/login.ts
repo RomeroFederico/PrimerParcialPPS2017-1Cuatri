@@ -4,6 +4,8 @@ import { AlertController } from 'ionic-angular';
 import { RegistroPage } from '../registro/registro';
 import { PrincipalPage } from '../principal/principal';
 
+import { TriviaService } from '../../providers/trivia-service';
+
 export class Jugador {
     constructor(public idJugador : number = 1, public nombre : string = "", 
                 public puntaje : number = 0, public partidasJugadas : number = 0,
@@ -15,13 +17,13 @@ export class Jugador {
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html',
-  providers : [AlertController]
+  providers : [AlertController, TriviaService]
 })
 export class LoginPage {
 
   jugador: Jugador = new Jugador();
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: AlertController)
+  constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: AlertController, public triviaService : TriviaService)
   {
   }
 
@@ -29,27 +31,16 @@ export class LoginPage {
     console.log('ionViewDidLoad LoginPage');
   }
 
-  Login(): void {
-  if (this.ValidarUsuario())
+  Login(): void
   {
-    console.log("Iniciando Sesion");  // Acceso a Pagina Principal.
+    console.log("Iniciando Sesion");
+
     this.navCtrl.setRoot(PrincipalPage, {
       Jugador : this.jugador
     }, {
       animate: true, 
       direction: "forward"
     });
-  }
-  else
-  	{
-      console.log("Email y/o Password incorrecto!!!");
-      let alert = this.alertCtrl.create({
-        title: 'Error',
-        subTitle: 'El usuario ingresado no existe!!!',
-        buttons: ['Ok']
-      });
-      alert.present();
-    }
   }
 
   Registrar(): void 
@@ -59,11 +50,34 @@ export class LoginPage {
     });
   }
 
-  ValidarUsuario(): boolean       // Conexion con el servidor.
+  ValidarUsuario()
   {
-    if (this.jugador.nombre == 'usuario' || this.jugador.nombre == 'federico')
-      return true; 
-    return false;
+    this.triviaService.BuscarUsuario({nombre : this.jugador.nombre})
+      .subscribe(
+        ok => {
+          console.log(ok.mensaje);
+
+          if (ok.exito == true)
+          {
+            this.jugador = ok.usuario;
+            this.Login();
+          }
+          else
+            this.MostrarMensaje("Error", ok.mensaje);
+        }, 
+        error => console.error('Error: ' + error),
+        () => console.log('Alta Completed!')
+      );
+  }
+
+  MostrarMensaje(titulo, mensaje)
+  {
+    let alert = this.alertCtrl.create({
+      title: titulo,
+      subTitle: mensaje,
+      buttons: ['Ok']
+    });
+    alert.present();
   }
 
 }

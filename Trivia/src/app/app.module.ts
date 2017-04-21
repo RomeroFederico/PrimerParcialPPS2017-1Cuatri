@@ -9,6 +9,8 @@ import { AboutPage} from '../pages/about/about';
 import { JuegoPage } from '../pages/juego/juego';
 import { ResultadoPage } from '../pages/resultado/resultado';
 
+import { TriviaService } from '../providers/trivia-service'; 
+
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -36,6 +38,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     ResultadoPage
   ],
   providers: [
+    TriviaService,
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler}

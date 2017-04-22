@@ -51,13 +51,17 @@ $app->post('/registro', function (Request $request, Response $response)
         $usuarioAlta->respCorrectas = 0;
         $usuarioAlta->respIncorrectas = 0;
         $usuarioAlta->imagen = null;
+
+        $exitoAlRegistrar = Usuario::Agregar($usuarioAlta);
         
-        if (!Usuario::Agregar($usuarioAlta))
+        if ($exitoAlRegistrar === false)
             $resultado->mensaje = "Error en el alta de usuario.";
         else
         {
             $resultado->exito = true;
             $resultado->mensaje = "Usuario registrado con exito";
+            $usuarioAlta->idJugador = $exitoAlRegistrar;
+            $resultado->jugador = $usuarioAlta;
         }
     }
     else

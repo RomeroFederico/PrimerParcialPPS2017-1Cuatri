@@ -98,7 +98,7 @@
                 return FALSE;
             }
 
-            return TRUE;
+            return $objetoAccesoDatos->RetornarUltimoIdInsertado();
         }
 
         public static function Modificar($obj)

@@ -55,8 +55,6 @@ export class LoginPage {
     this.triviaService.BuscarUsuario({nombre : this.jugador.nombre})
       .subscribe(
         ok => {
-          console.log(ok.mensaje);
-
           if (ok.exito == true)
           {
             this.jugador = ok.usuario;
@@ -65,7 +63,11 @@ export class LoginPage {
           else
             this.MostrarMensaje("Error", ok.mensaje);
         }, 
-        error => console.error('Error: ' + error),
+        error => 
+        {
+          this.MostrarMensaje("Error", "Ha ocurrido un error, vuelva a intentarlo.");
+          console.error('Error: ' + error);
+        },
         () => console.log('Alta Completed!')
       );
   }

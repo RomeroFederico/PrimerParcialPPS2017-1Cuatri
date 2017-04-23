@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, AlertController } from 'ionic-angular';
 import { TriviaService } from '../../providers/trivia-service';
 import { ToastController } from 'ionic-angular';
 
@@ -9,7 +9,10 @@ import { Jugador } from '../login/login';
 
 export class Pregunta
 {
-  constructor(public pregunta : string, public respuestas : Array <string>, public correcta : number)
+  constructor(public idPregunta: number, public pregunta : string,
+              public resp1 : string, public resp2 : string,
+              public resp3 : string, public resp4 : string,
+              public correcta : number, public imagenPregunta : string)
   {}
 }
 
@@ -22,28 +25,65 @@ export class Pregunta
 export class JuegoPage {
 
   jugador : Jugador;
-  puntajePartida : number;
-  preguntas : Array <Pregunta>;
-  preguntaActual : number;
+  puntajePartida : number = 0;
+  preguntas : any;
+  preguntaActual : number = 0;
+  respuestas : Array <string>;
+  preguntaActualEnunciado : string = "";
 
   inhabilitarBotones : boolean = null;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController, public triviaService : TriviaService)
+  constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController, public triviaService : TriviaService, public alertCtrl : AlertController)
   {
     this.jugador = navParams.get('Jugador');
-    this.puntajePartida = 0;
+
     this.preguntas = new Array<Pregunta>();
 
-    // Traer preguntas de la base de datos.
-    this.preguntas.push(new Pregunta("1+1", ["1", "2", "3"], 1));
-    this.preguntas.push(new Pregunta("1+2", ["1", "2", "3"], 2));
-    this.preguntas.push(new Pregunta("1+3", ["4", "2", "3"], 0));
-
-    this.preguntaActual = 0;
+    this.TraerPreguntas();
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad JuegoPage');
+  }
+
+  TraerPreguntas()
+  {
+    this.triviaService.LeerPreguntas()
+      .subscribe(
+        ok => {
+          if (ok === false)
+          {
+            this.MostrarAlert("No se pudo recuperar las preguntas. Vuelva a intentarlo");
+            this.Volver();
+          }
+
+          this.preguntas = ok;
+
+          this.MostrarRespuestas();
+
+        }, 
+        error => 
+        {
+          this.MostrarAlert("No se pudo recuperar las preguntas. Vuelva a intentarlo");
+          console.error('Error: ' + error);
+          this.Volver();
+        },
+        () => console.log('Traer Preguntas Completed!')
+      );
+  }
+
+  MostrarRespuestas()
+  {
+    this.respuestas = new Array<string>();
+
+    this.respuestas.push(this.preguntas[this.preguntaActual].resp1);
+    this.respuestas.push(this.preguntas[this.preguntaActual].resp2);
+    this.respuestas.push(this.preguntas[this.preguntaActual].resp3);
+
+    if (this.preguntas[this.preguntaActual].resp4 != null)
+      this.respuestas.push(this.preguntas[this.preguntaActual].resp4);
+
+    this.preguntaActualEnunciado = this.preguntas[this.preguntaActual].pregunta;
   }
 
   Seleccion(opcion : number) : void 
@@ -80,6 +120,7 @@ export class JuegoPage {
       {
         this.inhabilitarBotones = null;
         this.preguntaActual++;
+        this.MostrarRespuestas();
       }
 
     });
@@ -133,6 +174,21 @@ export class JuegoPage {
       position: 'middle'
     });
     toast.present();
+  }
+
+  MostrarAlert(mensaje)
+  {
+    let alert = this.alertCtrl.create({
+      title: "Juego cancelado",
+      subTitle: mensaje,
+      buttons: ['Ok']
+    });
+    alert.present();
+  }
+
+  Volver()
+  {
+    this.navCtrl.pop();
   }
 
 }

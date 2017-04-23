@@ -2,6 +2,7 @@
 
 require_once "../Clases/AccesoDatos.php";
 require_once "../Clases/Usuario.php";
+require_once "../Clases/Pregunta.php";
 
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
@@ -110,6 +111,18 @@ $app->put('/usuario/{idJugador}', function (Request $request, Response $response
         $exito = Usuario::Modificar($usuarioModificar);
 
     $response = $response->withJson($exito);
+    return $response->withHeader('Content-type', 'application/json');
+});
+
+$app->get('/preguntas', function (Request $request, Response $response)
+{
+    $preguntas = Pregunta::TraerPreguntas();
+
+    if (count($preguntas) < 3)
+        $preguntas = false;
+
+    $response = $response->withJson($preguntas);
+
     return $response->withHeader('Content-type', 'application/json');
 });
 

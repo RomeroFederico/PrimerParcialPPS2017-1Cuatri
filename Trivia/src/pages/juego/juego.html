@@ -17,11 +17,11 @@
 
   <ion-card align = 'center' class = 'cardPregunta'>
     <ion-card-content>
-      {{preguntas[preguntaActual].pregunta}}
+      {{preguntaActualEnunciado}}
     </ion-card-content> 
   </ion-card>
 
-  <ion-list *ngFor="let respuesta of preguntas[preguntaActual].respuestas; let i=index">
+  <ion-list *ngFor="let respuesta of respuestas; let i=index">
 
     <button ion-button block color = "primary" disabled={{inhabilitarBotones}} (click) = "Seleccion(i)">{{respuesta}}</button>
 

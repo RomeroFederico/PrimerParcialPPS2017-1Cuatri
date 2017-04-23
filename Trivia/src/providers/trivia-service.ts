@@ -46,4 +46,10 @@ export class TriviaService {
       .put('http://localhost/slimTrivia/ws/administracion.php/usuario/' + idModificar, body, { headers: headers })
       .map(response => response.json());
   }
+
+  LeerPreguntas()
+  {
+    return this.http.get('http://localhost/slimTrivia/ws/administracion.php/pregunts')
+      .map(response => response.json());
+  }
 }

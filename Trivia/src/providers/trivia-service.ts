@@ -49,7 +49,7 @@ export class TriviaService {
 
   LeerPreguntas()
   {
-    return this.http.get('http://localhost/slimTrivia/ws/administracion.php/pregunts')
+    return this.http.get('http://localhost/slimTrivia/ws/administracion.php/preguntas')
       .map(response => response.json());
   }
 }

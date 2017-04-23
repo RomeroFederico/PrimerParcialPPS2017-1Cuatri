@@ -5,6 +5,7 @@ import { AlertController } from 'ionic-angular';
 import { AboutPage } from '../about/about';
 import { LoginPage } from '../login/login';
 import { JuegoPage } from '../juego/juego';
+import { InformacionPage } from '../informacion/informacion';
 
 import { Jugador } from '../login/login';
 
@@ -33,7 +34,9 @@ export class PrincipalPage {
   }
 
   MostrarDatos() : void {
-
+        this.navCtrl.push(InformacionPage, {
+      Jugador : this.jugador,
+    });
   }
 
   MostrarResultados() : void {

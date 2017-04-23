@@ -8,6 +8,7 @@ import { PrincipalPage} from '../pages/principal/principal';
 import { AboutPage} from '../pages/about/about';
 import { JuegoPage } from '../pages/juego/juego';
 import { ResultadoPage } from '../pages/resultado/resultado';
+import { InformacionPage } from '../pages/informacion/informacion';
 
 import { TriviaService } from '../providers/trivia-service'; 
 
@@ -22,7 +23,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     PrincipalPage,
     AboutPage,
     JuegoPage,
-    ResultadoPage
+    ResultadoPage,
+    InformacionPage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -35,7 +37,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     PrincipalPage,
     AboutPage,
     JuegoPage,
-    ResultadoPage
+    ResultadoPage,
+    InformacionPage
   ],
   providers: [
     TriviaService,

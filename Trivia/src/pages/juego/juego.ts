@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-
+import { TriviaService } from '../../providers/trivia-service';
 import { ToastController } from 'ionic-angular';
 
 import { ResultadoPage } from '../resultado/resultado';
@@ -28,7 +28,7 @@ export class JuegoPage {
 
   inhabilitarBotones : boolean = null;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController)
+  constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController, public triviaService : TriviaService)
   {
     this.jugador = navParams.get('Jugador');
     this.puntajePartida = 0;
@@ -46,8 +46,8 @@ export class JuegoPage {
     console.log('ionViewDidLoad JuegoPage');
   }
 
-  Seleccion(opcion : number) : void {
-
+  Seleccion(opcion : number) : void 
+  {
     this.inhabilitarBotones = true;
 
     let toast = this.toastCtrl.create({
@@ -72,14 +72,9 @@ export class JuegoPage {
       if (this.preguntaActual == 2)
       {
         console.log("Juego Terminado");
-        this.navCtrl.setRoot(ResultadoPage, {
-          Jugador : this.jugador,
-          Puntaje : this.puntajePartida,
-          Tiempo : 0
-        }, {
-          animate: true, 
-          direction: "forward"
-        });    
+        this.CalcularResultado();
+        this.GuardarResultado();
+        this.MostrarResultado();
       }
       else
       {
@@ -89,6 +84,54 @@ export class JuegoPage {
 
     });
 
+    toast.present();
+  }
+
+  CalcularResultado()
+  {
+    //Implementar tiempo.
+    this.jugador.partidasJugadas++;
+    this.jugador.puntaje += this.puntajePartida;
+    this.jugador.respCorrectas += this.puntajePartida;
+    this.jugador.respIncorrectas += 3 - this.puntajePartida;
+  }
+
+  GuardarResultado()
+  {
+    this.triviaService.ModificarUsuario(this.jugador, this.jugador.idJugador)
+      .subscribe(
+        ok => {
+          if (ok === false)
+            this.MostrarMensaje("No se pudo guardar los datos");
+        }, 
+        error => 
+        {
+          this.MostrarMensaje("No se pudo guardar los datos");
+          console.error('Error: ' + error);
+        },
+        () => console.log('Guardar Datos Jugador Completed!')
+      );
+  }
+
+  MostrarResultado()
+  {
+    this.navCtrl.setRoot(ResultadoPage, {
+      Jugador : this.jugador,
+      Puntaje : this.puntajePartida,
+      Tiempo : 0
+      }, {
+          animate: true, 
+          direction: "forward"
+    });
+  }
+
+  MostrarMensaje(mensaje)
+  {
+    let toast = this.toastCtrl.create({
+      message: mensaje,
+      duration: 1000,
+      position: 'middle'
+    });
     toast.present();
   }
 

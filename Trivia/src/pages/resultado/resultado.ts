@@ -20,11 +20,6 @@ export class ResultadoPage {
     this.jugador = navParams.get('Jugador');
     this.puntajePartida = navParams.get('Puntaje');
     this.tiempo = navParams.get('Tiempo');
-
-    this.jugador.partidasJugadas++;
-    this.jugador.puntaje += this.puntajePartida;
-    this.jugador.respCorrectas += this.puntajePartida;
-    this.jugador.respIncorrectas += 3 - this.puntajePartida;
   }
 
   ionViewDidLoad() {

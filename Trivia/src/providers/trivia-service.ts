@@ -52,4 +52,27 @@ export class TriviaService {
     return this.http.get('http://localhost/slimTrivia/ws/administracion.php/preguntas')
       .map(response => response.json());
   }
+
+  LeerResultados()
+  {
+    return this.http.get('http://localhost/slimTrivia/ws/administracion.php/resultados')
+      .map(response => response.json());
+  }
+
+  LeerUltimoResultadoJugador(idJugador)
+  {
+    return this.http.get('http://localhost/slimTrivia/ws/administracion.php/resultados/' + idJugador)
+      .map(response => response.json());
+  }
+
+  GuardarResultados(datosAgregar)
+  {
+    var body =  JSON.stringify(datosAgregar);
+    var headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    
+    return this.http
+      .post('http://localhost/slimTrivia/ws/administracion.php/resultados/agregar' , body, { headers: headers })
+      .map(response => response.json());
+  }
 }

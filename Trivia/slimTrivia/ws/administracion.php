@@ -3,6 +3,7 @@
 require_once "../Clases/AccesoDatos.php";
 require_once "../Clases/Usuario.php";
 require_once "../Clases/Pregunta.php";
+require_once "../Clases/Resultado.php";
 
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
@@ -122,6 +123,45 @@ $app->get('/preguntas', function (Request $request, Response $response)
         $preguntas = false;
 
     $response = $response->withJson($preguntas);
+
+    return $response->withHeader('Content-type', 'application/json');
+});
+
+$app->get('/resultados', function (Request $request, Response $response)
+{
+    $resultados = Resultado::TraerResultados();
+
+    if (count($resultados) < 1)
+        $resultados = false;
+
+    $response = $response->withJson($resultados);
+
+    return $response->withHeader('Content-type', 'application/json');
+});
+
+$app->get('/resultados/{idJugador}', function (Request $request, Response $response)
+{
+    $idJugador = $request->getAttribute('idJugador');
+
+    $resultado = Resultado::TraerUltimoResultadoDeJugador($idJugador);
+
+    $response = $response->withJson($resultado);
+
+    return $response->withHeader('Content-type', 'application/json');
+});
+
+$app->post('/resultados/agregar', function (Request $request, Response $response)
+{
+    date_default_timezone_set('America/Argentina/Buenos_Aires');
+
+    $resultado = new stdclass();
+    $resultado->idJugador =  $request->getParams()["idJugador"];
+    $resultado->puntaje =  $request->getParams()["puntaje"];
+    $resultado->fecha = strftime("%Y-%m-%d %H:%M:%S", time() );
+
+    $exito = Resultado::AgregarResultado($resultado);
+
+    $response = $response->withJson($exito);
 
     return $response->withHeader('Content-type', 'application/json');
 });

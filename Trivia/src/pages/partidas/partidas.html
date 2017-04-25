@@ -1,0 +1,49 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Resultados</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <ion-card align = 'center' class = 'cardPregunta'>
+    <ion-card-content>
+      Ultimas Partidas
+    </ion-card-content> 
+  </ion-card>
+
+  <ion-list>
+
+    <ion-item *ngFor="let partida of partidas">
+        <ion-avatar item-left>
+          <img src="https://avatars3.githubusercontent.com/u/17879446?v=3&s=460"><!-- Imagen del jugador -->
+        </ion-avatar>
+        <h2>{{partida.nombre}}</h2>
+        <p>Puntaje : {{partida.puntaje}}</p>
+        <p>Fecha   : {{partida.fecha}}</p>
+    </ion-item>
+
+  </ion-list>
+
+  <div *ngIf = "sinResultados">
+    <ion-card align = 'center' class = 'cardPregunta'>
+      <ion-card-content>
+        No hay resultados que mostrar.
+      </ion-card-content> 
+    </ion-card>
+  </div>
+
+  <div *ngIf = "errorAlTraerResultados">
+    <ion-card align = 'center' class = 'cardPregunta'>
+      <ion-card-content>
+        Ocurrio un error al querer leer las partidas anteriores.
+      </ion-card-content> 
+    </ion-card>
+  </div>
+
+  <button ion-button block color = "primary" (click) = "Volver()">Volver al Menu Principal</button>
+
+</ion-content>

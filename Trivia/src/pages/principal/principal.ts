@@ -6,6 +6,7 @@ import { AboutPage } from '../about/about';
 import { LoginPage } from '../login/login';
 import { JuegoPage } from '../juego/juego';
 import { InformacionPage } from '../informacion/informacion';
+import { PartidasPage } from '../partidas/partidas';
 
 import { Jugador } from '../login/login';
 
@@ -34,13 +35,13 @@ export class PrincipalPage {
   }
 
   MostrarDatos() : void {
-        this.navCtrl.push(InformacionPage, {
+    this.navCtrl.push(InformacionPage, {
       Jugador : this.jugador,
     });
   }
 
   MostrarResultados() : void {
-
+    this.navCtrl.push(PartidasPage);
   }
 
   MostrarAbout() : void {

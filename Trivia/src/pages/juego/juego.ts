@@ -114,6 +114,7 @@ export class JuegoPage {
         console.log("Juego Terminado");
         this.CalcularResultado();
         this.GuardarResultado();
+        this.GuardarPartida();
         this.MostrarResultado();
       }
       else
@@ -143,14 +144,34 @@ export class JuegoPage {
       .subscribe(
         ok => {
           if (ok === false)
-            this.MostrarMensaje("No se pudo guardar los datos");
+            this.MostrarMensaje("No se pudo guardar los datos", true);
         }, 
         error => 
         {
-          this.MostrarMensaje("No se pudo guardar los datos");
+          this.MostrarMensaje("No se pudo guardar los datos", true);
           console.error('Error: ' + error);
         },
         () => console.log('Guardar Datos Jugador Completed!')
+      );
+  }
+
+  GuardarPartida()
+  {
+    this.triviaService.GuardarResultados({
+      idJugador : this.jugador.idJugador,
+      puntaje : this.puntajePartida
+    })
+      .subscribe(
+        ok => {
+          if (ok === false)
+            this.MostrarMensaje("No se pudo guardar la partida", false);
+        }, 
+        error => 
+        {
+          this.MostrarMensaje("No se pudo guardar la partida", false);
+          console.error('Error: ' + error);
+        },
+        () => console.log('Guardar Datos Partida Completed!')
       );
   }
 
@@ -166,12 +187,12 @@ export class JuegoPage {
     });
   }
 
-  MostrarMensaje(mensaje)
+  MostrarMensaje(mensaje, posicionAbajo)
   {
     let toast = this.toastCtrl.create({
       message: mensaje,
       duration: 1000,
-      position: 'middle'
+      position: posicionAbajo == true? 'bottom' : 'middle'
     });
     toast.present();
   }

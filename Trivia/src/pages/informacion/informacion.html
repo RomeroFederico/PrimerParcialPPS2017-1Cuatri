@@ -1,17 +1,17 @@
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar text-right color = "primary">
     <ion-title>Datos de {{jugador.nombre}}</ion-title>
   </ion-navbar>
 
 </ion-header>
 
-<ion-content padding>
+<ion-content padding class = "miClase">
 
   <ion-list>
 
     <ion-item-group>
-      <ion-item-divider color="light">Datos del jugador</ion-item-divider>
+      <ion-item-divider color="primary">Datos del jugador</ion-item-divider>
       <ion-item>Puntaje total          : {{jugador.puntaje}}</ion-item>
       <ion-item>Partidas Jugadas       : {{jugador.partidasJugadas}}</ion-item>
       <ion-item>Respuestas Correctas   : {{jugador.respCorrectas}}</ion-item>
@@ -20,6 +20,6 @@
 
   </ion-list>
 
-  <button ion-button block color = "primary" (click) = "Volver()">Volver al Menu Principal</button>
+  <button ion-button block class = "informacion-button" color = "primary" (click) = "Volver()">Volver al Menu Principal</button>
 
 </ion-content>

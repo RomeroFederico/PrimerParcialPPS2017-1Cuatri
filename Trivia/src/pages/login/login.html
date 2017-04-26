@@ -1,22 +1,30 @@
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>Login</ion-title>
+  <ion-navbar color = "primary">
+    <ion-title text-center>Login</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content pading>
-
-    <ion-item>
-      <ion-label stacked>Nombre</ion-label>
-      <ion-input type="text" [(ngModel)]="jugador.nombre"></ion-input>
-    </ion-item>
-    <div padding>
-	    <button ion-button round color = "secondary" (click) = "ValidarUsuario()">Login</button>
-      <button ion-button round color = "danger" (click) = "Registrar()">Registrarse</button>
-    </div>
+<ion-content pading class = "miClase">
+  <div class = "centrar">
+    <ion-row>
+      <ion-col>
+      <!--<img src="assets/images/trivia.png" width="150" height="150" class = 'centrarImagen'/>-->
+      <ion-item>
+        <ion-label stacked>Nombre</ion-label>
+        <ion-input text-center type="text" [(ngModel)]="jugador.nombre"></ion-input>
+      </ion-item>
+      <div padding>
+        <button ion-button block color = "primary" class = 'login-button' (click) = "ValidarUsuario()">
+          Login
+        </button>
+        <button ion-button block color = "primary" class = 'login-button' (click) = "Registrar()">Registrarse</button>
+      </div>
+      </ion-col>
+    </ion-row>
+  </div>
 
 </ion-content>
 

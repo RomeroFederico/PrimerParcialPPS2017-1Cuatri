@@ -207,6 +207,31 @@ export class JuegoPage {
     alert.present();
   }
 
+  ConfirmarVolver()
+  {
+    let alert = this.alertCtrl.create({
+      title: "Salir",
+      subTitle: "Desea salir de la partida?",
+      buttons: [
+      {
+        text: 'Cancelar',
+        role: 'cancel',
+        handler: () => {
+          console.log('No se salio de la partida');
+        }
+      },
+      {
+        text: 'Ok',
+        handler: () => {
+          console.log('Partida Cancelada');
+          this.Volver();
+        }
+      }
+    ]
+    });
+    alert.present();
+  }
+
   Volver()
   {
     this.navCtrl.pop();

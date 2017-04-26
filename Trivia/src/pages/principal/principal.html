@@ -1,20 +1,26 @@
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>Pagina Principal ({{jugador.nombre}})</ion-title>
+  <ion-navbar color = "primary" text-center>
+    <ion-title>Bienvenido {{jugador.nombre}}</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
+<ion-content padding class = "miClase">
 
-  <div padding>
-    <button ion-button block color = "secondary" (click) = "MostrarJugar()">Jugar</button> 
-    <button ion-button block color = "secondary" (click) = "MostrarDatos()">Datos del Jugador</button>
-    <button ion-button block color = "secondary" (click) = "MostrarResultados()">Ultimas Partidas</button>
-    <button ion-button block color = "secondary" (click) = "MostrarAbout()">Acerca de</button>
-    <button ion-button block color = "secondary" (click) = "Logout()">Logout</button>
+  <div padding class = "centrar">
+    <ion-row>
+    <ion-col>
+    <div>
+    <button ion-button block class = "principal-button" color = "primary" (click) = "MostrarJugar()">Jugar</button> 
+    <button ion-button block class = "principal-button" color = "primary" (click) = "MostrarDatos()">Datos del Jugador</button>
+    <button ion-button block class = "principal-button" color = "primary" (click) = "MostrarResultados()">Ultimas Partidas</button>
+    <button ion-button block class = "principal-button" color = "primary" (click) = "MostrarAbout()">Acerca de</button>
+    <button ion-button block class = "principal-button" color = "primary" (click) = "Logout()">Logout</button>
+    </div>
+    </ion-col>
+    </ion-row>
   </div>
 
 </ion-content>

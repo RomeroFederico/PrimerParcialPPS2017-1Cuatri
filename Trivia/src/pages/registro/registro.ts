@@ -30,7 +30,7 @@ export class RegistroPage {
         ok => {
           this.MostrarMensaje(ok.exito? "Informacion" : "Error", ok.mensaje);
           if (ok.exito == true)
-            this.Login(ok.jugador);
+            this.Login(this.ArreglarTipos(ok.jugador));
         }, 
         error => 
         {
@@ -65,6 +65,22 @@ export class RegistroPage {
       buttons: ['Ok']
     });
     alert.present();
+  }
+
+  ArreglarTipos(jugador)
+  {
+    if (typeof(this.jugador.puntaje) === "string")
+      jugador.puntaje = +jugador.puntaje;
+    if (typeof(this.jugador.partidasJugadas) === "string")
+      jugador.partidasJugadas = +jugador.partidasJugadas;
+    if (typeof(this.jugador.respCorrectas) === "string")
+      jugador.respCorrectas = +jugador.respCorrectas;
+    if (typeof(this.jugador.respIncorrectas) === "string")
+      jugador.respIncorrectas = +jugador.respIncorrectas;
+    if (typeof(this.jugador.idJugador) === "string")
+      jugador.idJugador = +jugador.idJugador;
+
+    return jugador;
   }
 
 }

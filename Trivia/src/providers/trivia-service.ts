@@ -16,12 +16,12 @@ export class TriviaService {
     headers.append('Content-Type', 'application/json');
     
     return this.http
-      .post('http://localhost/slimTrivia/ws/administracion.php/login', body, { headers: headers })
+      .post('http://www.romerofederico.hol.es/slimTrivia/ws/administracion.php/login', body, { headers: headers })
       .map(response => response.json());
   }
 
   LeerUsuarios() {
-    return this.http.get('http://localhost/slimTrivia/ws/administracion.php/usuarios')
+    return this.http.get('http://www.romerofederico.hol.es/slimTrivia/ws/administracion.php/usuarios')
       .map(response => response.json());
   }
 
@@ -32,7 +32,7 @@ export class TriviaService {
     headers.append('Content-Type', 'application/json');
     
     return this.http
-      .post('http://localhost/slimTrivia/ws/administracion.php/registro', body, { headers: headers })
+      .post('http://www.romerofederico.hol.es/slimTrivia/ws/administracion.php/registro', body, { headers: headers })
       .map(response => response.json());
   }
 
@@ -43,25 +43,25 @@ export class TriviaService {
     headers.append('Content-Type', 'application/json');
     
     return this.http
-      .put('http://localhost/slimTrivia/ws/administracion.php/usuario/' + idModificar, body, { headers: headers })
+      .put('http://www.romerofederico.hol.es/slimTrivia/ws/administracion.php/usuario/' + idModificar, body, { headers: headers })
       .map(response => response.json());
   }
 
   LeerPreguntas()
   {
-    return this.http.get('http://localhost/slimTrivia/ws/administracion.php/preguntas')
+    return this.http.get('http://www.romerofederico.hol.es/slimTrivia/ws/administracion.php/preguntas')
       .map(response => response.json());
   }
 
   LeerResultados()
   {
-    return this.http.get('http://localhost/slimTrivia/ws/administracion.php/resultados')
+    return this.http.get('http://www.romerofederico.hol.es/slimTrivia/ws/administracion.php/resultados')
       .map(response => response.json());
   }
 
   LeerUltimoResultadoJugador(idJugador)
   {
-    return this.http.get('http://localhost/slimTrivia/ws/administracion.php/resultados/' + idJugador)
+    return this.http.get('http://www.romerofederico.hol.es/slimTrivia/ws/administracion.php/resultados/' + idJugador)
       .map(response => response.json());
   }
 
@@ -72,7 +72,7 @@ export class TriviaService {
     headers.append('Content-Type', 'application/json');
     
     return this.http
-      .post('http://localhost/slimTrivia/ws/administracion.php/resultados/agregar' , body, { headers: headers })
+      .post('http://www.romerofederico.hol.es/slimTrivia/ws/administracion.php/resultados/agregar' , body, { headers: headers })
       .map(response => response.json());
   }
 }

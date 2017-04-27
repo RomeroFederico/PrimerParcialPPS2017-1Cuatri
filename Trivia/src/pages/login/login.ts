@@ -58,6 +58,9 @@ export class LoginPage {
           if (ok.exito == true)
           {
             this.jugador = ok.usuario;
+
+            this.jugador = this.ArreglarTipos(this.jugador);
+
             this.Login();
           }
           else
@@ -80,6 +83,22 @@ export class LoginPage {
       buttons: ['Ok']
     });
     alert.present();
+  }
+
+  ArreglarTipos(jugador)
+  {
+    if (typeof(this.jugador.puntaje) === "string")
+      jugador.puntaje = +jugador.puntaje;
+    if (typeof(this.jugador.partidasJugadas) === "string")
+      jugador.partidasJugadas = +jugador.partidasJugadas;
+    if (typeof(this.jugador.respCorrectas) === "string")
+      jugador.respCorrectas = +jugador.respCorrectas;
+    if (typeof(this.jugador.respIncorrectas) === "string")
+      jugador.respIncorrectas = +jugador.respIncorrectas;
+    if (typeof(this.jugador.idJugador) === "string")
+      jugador.idJugador = +jugador.idJugador;
+
+    return jugador;
   }
 
 }

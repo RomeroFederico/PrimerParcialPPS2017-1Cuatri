@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, LoadingController } from 'ionic-angular';
 import { TriviaService } from '../../providers/trivia-service';
 
 /*
@@ -18,7 +18,11 @@ export class PartidasPage {
   sinResultados : boolean = false;
   errorAlTraerResultados : boolean = false;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public triviaService : TriviaService)
+  loading;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, 
+              public loadingController : LoadingController,
+              public triviaService : TriviaService)
   {
     this.partidas = new Array();
 
@@ -31,9 +35,14 @@ export class PartidasPage {
 
   TraerResultados()
   {
+    this.MostrarLoading();
+
     this.triviaService.LeerResultados()
       .subscribe(
         ok => {
+
+          this.loading.dismiss();
+
           if (ok === false)
             this.sinResultados = true;
           else
@@ -41,11 +50,25 @@ export class PartidasPage {
         }, 
         error => 
         {
+          this.loading.dismiss();
           this.errorAlTraerResultados = true;
           console.error('Error: ' + error);
         },
         () => console.log('Traer Partidas Completed!')
       );
+  }
+
+  MostrarLoading() 
+  {
+    let loading = this.loadingController.create({
+      spinner: 'bubbles',
+      content: `Cargando, 
+      Por Favor Espere un Momento...`,
+    });
+
+    this.loading = loading;
+
+    this.loading.present();
   }
 
   Volver(): void {

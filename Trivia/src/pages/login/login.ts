@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+
 import { AlertController } from 'ionic-angular';
+import { LoadingController } from 'ionic-angular';
+
 import { RegistroPage } from '../registro/registro';
 import { PrincipalPage } from '../principal/principal';
 
@@ -22,8 +25,11 @@ export class Jugador {
 export class LoginPage {
 
   jugador: Jugador = new Jugador();
+  loading;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: AlertController, public triviaService : TriviaService)
+  constructor(public navCtrl: NavController, public navParams: NavParams, 
+              private alertCtrl: AlertController, public loadingController : LoadingController,
+              public triviaService : TriviaService)
   {
   }
 
@@ -52,9 +58,14 @@ export class LoginPage {
 
   ValidarUsuario()
   {
+    this.MostrarLoading();
+
     this.triviaService.BuscarUsuario({nombre : this.jugador.nombre})
       .subscribe(
         ok => {
+
+          this.loading.dismiss();
+
           if (ok.exito == true)
           {
             this.jugador = ok.usuario;
@@ -68,6 +79,7 @@ export class LoginPage {
         }, 
         error => 
         {
+          this.loading.dismiss();
           this.MostrarMensaje("Error", "Ha ocurrido un error, vuelva a intentarlo.");
           console.error('Error: ' + error);
         },
@@ -83,6 +95,19 @@ export class LoginPage {
       buttons: ['Ok']
     });
     alert.present();
+  }
+
+  MostrarLoading() 
+  {
+    let loading = this.loadingController.create({
+      spinner: 'bubbles',
+      content: `Cargando, 
+      Por Favor Espere un Momento...`,
+    });
+
+    this.loading = loading;
+
+    this.loading.present();
   }
 
   ArreglarTipos(jugador)

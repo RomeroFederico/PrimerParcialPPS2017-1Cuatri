@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
+
 import { RegistroPage } from '../registro/registro';
+import { PrincipalPage } from '../principal/principal';
 
 export class Jugador {
     constructor(public idJugador : number = 1, 
@@ -33,7 +35,13 @@ export class LoginPage {
   Login(): void
   {
     console.log("Iniciando sesion para el jugador " + this.jugador.nombre)
-    // IR A PAGINA PRINCIPAL / JUEGO
+
+    this.navCtrl.setRoot(PrincipalPage, {
+      Jugador : this.jugador
+    }, {
+      animate: true, 
+      direction: "forward"
+    });
   }
 
   Registrar(): void 

@@ -1,0 +1,43 @@
+<ion-header>
+
+  <ion-navbar color = "primary" text-center>
+    <ion-title>Bienvenido {{this.jugador.nombre}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding class = "miClase">
+
+  <ion-grid class = "centrar">
+    <ion-row>
+      <ion-col class = "columnaCentradaCPU">
+        <img src="assets/images/piedra.png"/>
+      </ion-col>
+      <ion-col class = "columnaCentradaCPU">
+        <img src="assets/images/papel.png"/>
+      </ion-col>
+      <ion-col class = "columnaCentradaCPU">
+        <img src="assets/images/tijera.png"/>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+      </ion-col>
+      <ion-col>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col class = "columnaCentrada">
+        <img src="assets/images/piedra.png" (click) = "Jugar('piedra')" *ngIf = "habilitar.piedra"/>
+      </ion-col>
+      <ion-col class = "columnaCentrada">
+        <img src="assets/images/papel.png" (click) = "Jugar('papel')" *ngIf = "habilitar.papel"/>
+      </ion-col>
+      <ion-col class = "columnaCentrada">
+        <img src="assets/images/tijera.png" (click) = "Jugar('tijera')" *ngIf = "habilitar.tijera"/>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

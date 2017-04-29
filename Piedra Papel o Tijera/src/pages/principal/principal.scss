@@ -1,0 +1,47 @@
+page-principal {
+
+    .miClase
+    {
+        scroll-content {
+            display: flex;
+            flex-direction: column;
+        }
+ 
+        ion-grid {
+            padding: 0;
+            height: 100%;
+        }
+ 
+        ion-row {
+            flex: 1;
+        }
+    }
+
+    .columnaCentrada{
+        display: flex;
+        align-content: center;
+        align-items: center;
+
+        img{
+            height:100%;
+            width: auto;
+            display: block;
+            margin: auto;
+        }
+    }
+
+    .columnaCentradaCPU{
+        display: flex;
+        align-content: center;
+        align-items: center;
+
+        img{
+            height:100%;
+            width: auto;
+            display: block;
+            margin: auto;
+            opacity: 0.3;
+        }
+    }
+
+}

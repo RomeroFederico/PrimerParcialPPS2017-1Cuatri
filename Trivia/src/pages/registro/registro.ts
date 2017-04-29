@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController } from 'ionic-angular';
+import { NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
+
 import { TriviaService } from '../../providers/trivia-service';
+
 import { PrincipalPage } from '../principal/principal';
 
 import { Jugador } from '../login/login';
@@ -13,8 +15,11 @@ export class RegistroPage {
 
   jugador : Jugador;
 
+  loading;
+
   constructor(public navCtrl: NavController, public navParams: NavParams, 
-              public triviaService : TriviaService, public alertCtrl : AlertController) 
+              public triviaService : TriviaService, 
+              public alertCtrl : AlertController, public loadingController : LoadingController) 
   {
     this.jugador = navParams.get('Jugador');
   }
@@ -25,15 +30,21 @@ export class RegistroPage {
 
   RegistrarUsuario() : void 
   {
+    this.MostrarLoading();
+
     this.triviaService.AgregarUsuario({nombre : this.jugador.nombre})
       .subscribe(
         ok => {
+
+          this.loading.dismiss();
+
           this.MostrarMensaje(ok.exito? "Informacion" : "Error", ok.mensaje);
           if (ok.exito == true)
             this.Login(this.ArreglarTipos(ok.jugador));
         }, 
         error => 
         {
+          this.loading.dismiss();
           this.MostrarMensaje("Error", "Ha ocurrido un error, vuelva a intentarlo.");
           console.error('Error: ' + error);
         },
@@ -65,6 +76,19 @@ export class RegistroPage {
       buttons: ['Ok']
     });
     alert.present();
+  }
+
+  MostrarLoading() 
+  {
+    let loading = this.loadingController.create({
+      spinner: 'bubbles',
+      content: `Cargando, 
+      Por Favor Espere un Momento...`,
+    });
+
+    this.loading = loading;
+
+    this.loading.present();
   }
 
   ArreglarTipos(jugador)

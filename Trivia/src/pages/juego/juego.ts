@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController } from 'ionic-angular';
+import { NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
 import { TriviaService } from '../../providers/trivia-service';
 import { ToastController } from 'ionic-angular';
 
@@ -33,7 +33,11 @@ export class JuegoPage {
 
   inhabilitarBotones : boolean = null;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController, public triviaService : TriviaService, public alertCtrl : AlertController)
+  loading;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, 
+              public toastCtrl: ToastController, public alertCtrl : AlertController, public loadingController : LoadingController,
+              public triviaService : TriviaService)
   {
     this.jugador = navParams.get('Jugador');
 
@@ -48,9 +52,14 @@ export class JuegoPage {
 
   TraerPreguntas()
   {
+    this.MostrarLoading();
+
     this.triviaService.LeerPreguntas()
       .subscribe(
         ok => {
+
+          this.loading.dismiss();
+
           if (ok === false)
           {
             this.MostrarAlert("No se pudo recuperar las preguntas. Vuelva a intentarlo");
@@ -64,6 +73,7 @@ export class JuegoPage {
         }, 
         error => 
         {
+          this.loading.dismiss();
           this.MostrarAlert("No se pudo recuperar las preguntas. Vuelva a intentarlo");
           console.error('Error: ' + error);
           this.Volver();
@@ -205,6 +215,19 @@ export class JuegoPage {
       buttons: ['Ok']
     });
     alert.present();
+  }
+
+  MostrarLoading() 
+  {
+    let loading = this.loadingController.create({
+      spinner: 'bubbles',
+      content: `Cargando, 
+      Por Favor Espere un Momento...`,
+    });
+
+    this.loading = loading;
+
+    this.loading.present();
   }
 
   ConfirmarVolver()

@@ -12,30 +12,37 @@
   <ion-grid class = "centrar">
     <ion-row>
       <ion-col class = "columnaCentradaCPU">
-        <img src="assets/images/piedra.png"/>
+        <img [ngClass] = "clsImagenCPU" src="assets/images/piedraCPU.png" *ngIf = "habilitarCPU.piedra"/>
       </ion-col>
       <ion-col class = "columnaCentradaCPU">
-        <img src="assets/images/papel.png"/>
+        <img [ngClass] = "clsImagenCPU" src="assets/images/papelCPU.png" *ngIf = "habilitarCPU.papel"/>
       </ion-col>
       <ion-col class = "columnaCentradaCPU">
-        <img src="assets/images/tijera.png"/>
+        <img [ngClass] = "clsImagenCPU" src="assets/images/tijeraCPU.png" *ngIf = "habilitarCPU.tijera"/>
       </ion-col>
     </ion-row>
     <ion-row>
-      <ion-col>
-      </ion-col>
-      <ion-col>
+      <ion-col text-center>
+        <div *ngIf = "mostrarResultado">
+          <div [ngClass] = "clsResultado">
+            <p class = "mensaje" [ngStyle]="colorResultado">¡¡ {{resultado}} !!</p>
+          </div>
+          <!--<button ion-button outline round color = "primary">Volver a Jugar</button>-->
+          <ion-fab center [ngClass] = "clsResultadoBoton">
+            <button ion-fab (click) = "Reiniciar()"><ion-icon name="refresh"></ion-icon></button>
+          </ion-fab>
+        </div>
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col class = "columnaCentrada">
-        <img src="assets/images/piedra.png" (click) = "Jugar('piedra')" *ngIf = "habilitar.piedra"/>
+        <img [ngClass] = "clsImagen" src="assets/images/piedra.png" (click) = "Jugar('piedra')" *ngIf = "habilitar.piedra"/>
       </ion-col>
       <ion-col class = "columnaCentrada">
-        <img src="assets/images/papel.png" (click) = "Jugar('papel')" *ngIf = "habilitar.papel"/>
+        <img [ngClass] = "clsImagen" src="assets/images/papel.png" (click) = "Jugar('papel')" *ngIf = "habilitar.papel"/>
       </ion-col>
       <ion-col class = "columnaCentrada">
-        <img src="assets/images/tijera.png" (click) = "Jugar('tijera')" *ngIf = "habilitar.tijera"/>
+        <img [ngClass] = "clsImagen" src="assets/images/tijera.png" (click) = "Jugar('tijera')" *ngIf = "habilitar.tijera"/>
       </ion-col>
     </ion-row>
   </ion-grid>

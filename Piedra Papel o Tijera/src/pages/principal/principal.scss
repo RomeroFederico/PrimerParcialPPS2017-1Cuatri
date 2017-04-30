@@ -15,6 +15,11 @@ page-principal {
         ion-row {
             flex: 1;
         }
+
+        background-image: url(../assets/images/fondo.jpg);     
+        background-size: cover;
+        width: 100%;
+        height: 100%;;
     }
 
     .columnaCentrada{
@@ -47,7 +52,12 @@ page-principal {
     .mensaje{
         font-size: 30px;
         font-weight: bold;
-        color: green;
+    }
+
+    .resultados{
+        font-size: 15px;
+        font-weight: bold;
+        color: white;
     }
 
 }

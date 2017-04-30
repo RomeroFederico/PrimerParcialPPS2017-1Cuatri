@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, Platform } from 'ionic-angular';
+import { NavController, NavParams, AlertController } from 'ionic-angular';
+
+import { LoginPage } from '../login/login';
+import { AboutPage } from '../about/about';
 
 import { Jugador } from '../login/login';
 
@@ -10,6 +13,12 @@ import { Jugador } from '../login/login';
 export class PrincipalPage {
 
   jugador : Jugador;
+
+  partida = {
+    Victoria : 0,
+    Empate : 0,
+    Derrota : 0
+  }
 
   //Logica Partida
   habilitar = {
@@ -41,7 +50,8 @@ export class PrincipalPage {
   clsResultado : string;
   clsResultadoBoton : string;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public platform : Platform) 
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+              public alertCtrl : AlertController) 
   {
     this.jugador = navParams.get('Jugador');
   }
@@ -49,6 +59,57 @@ export class PrincipalPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad PrincipalPage');
   }
+
+  //Referente al Menu
+
+  MostrarDatos() : void 
+  {
+    console.log("Mostrar Datos del Jugador");
+    // this.navCtrl.push(PrincipalPage, {
+    //   Jugador : this.jugador,
+    // });
+  }
+
+  MostrarResultados() : void 
+  {
+    console.log("Mostrar Resultados de Partidas");
+    // this.navCtrl.push(PrincipalPage);
+  }
+
+  MostrarAbout() : void 
+  {
+    console.log("Mostrar About");
+    this.navCtrl.push(AboutPage);
+  }
+
+  Logout() : void {
+    let alert = this.alertCtrl.create({
+      title: 'Cerrar Sesion...',
+      message: '¿Desea Cerrar la Sesion?',
+      buttons: [
+      {
+        text: 'Cancelar',
+        role: 'cancel',
+        handler: () => {
+          console.log('No se Cerro la Sesion.');
+        }
+      },
+      {
+        text: 'Ok',
+        handler: () => {
+          console.log('Cerrando Sesion.');
+          this.navCtrl.setRoot(LoginPage, {}, {
+          animate: true, 
+          direction: "backward"
+          });
+        }
+      }
+    ]
+    });
+    alert.present();
+  }
+
+  //Referente al Juego
 
   Jugar(seleccion)
   {
@@ -74,6 +135,8 @@ export class PrincipalPage {
     this.clsResultadoBoton = "animated rotateIn infinite";
     this.mostrarResultado = true;
     this.colorResultado = this.coloresParaResultados[this.resultado];
+    
+    this.partida[this.resultado]++;
 
     console.log(this.resultado);
   }

@@ -11,6 +11,9 @@ export class Jugador {
                 public partidasGanadas : number = 0, 
                 public partidasEmpatadas : number = 0,
                 public partidasPerdidas : number = 0,
+                public jugPiedra : number = 0,
+                public jugPapel : number = 0,
+                public jugTijera : number = 0,
                 public imagen : string = "")
     {}
 }

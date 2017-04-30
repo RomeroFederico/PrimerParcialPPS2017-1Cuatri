@@ -9,6 +9,16 @@
 
 <ion-content padding class = "miClase">
 
+  <ion-fab top left edge>
+    <button ion-fab><ion-icon name="options"></ion-icon></button>
+    <ion-fab-list>
+      <button ion-fab color = "primary" (click) = "MostrarDatos()"><ion-icon name="person"></ion-icon></button>
+      <button ion-fab color = "primary" (click) = "MostrarResultados()"><ion-icon name="eye"></ion-icon></button>
+      <button ion-fab color = "primary" (click) = "MostrarAbout()"><ion-icon name="contacts"></ion-icon></button>
+      <button ion-fab color = "danger" (click) = "Logout()"><ion-icon name="power"></ion-icon></button>
+    </ion-fab-list>
+  </ion-fab>
+
   <ion-grid class = "centrar">
     <ion-row>
       <ion-col class = "columnaCentradaCPU">
@@ -48,3 +58,9 @@
   </ion-grid>
 
 </ion-content>
+
+<ion-footer style="background-color: #78E163; height : 40px;" text-center>
+  <ion-toolbar transparent>
+    <p class = "resultados">Victoria: {{partida.Victoria}}, Empate: {{partida.Empate}}, Derrota: {{partida.Derrota}}</p>
+  </ion-toolbar>
+</ion-footer>

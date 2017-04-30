@@ -7,7 +7,8 @@ import { PrincipalPage } from '../principal/principal';
 
 export class Jugador {
     constructor(public idJugador : number = 1, 
-                public nombre : string = "", 
+                public nombre : string = "",
+                public partidas : number = 0, 
                 public partidasGanadas : number = 0, 
                 public partidasEmpatadas : number = 0,
                 public partidasPerdidas : number = 0,

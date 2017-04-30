@@ -9,13 +9,13 @@
 
 <ion-content padding class = "miClase">
 
-  <ion-fab top left edge>
+  <ion-fab top left edge #fab>
     <button ion-fab><ion-icon name="options"></ion-icon></button>
     <ion-fab-list>
-      <button ion-fab color = "primary" (click) = "MostrarDatos()"><ion-icon name="person"></ion-icon></button>
-      <button ion-fab color = "primary" (click) = "MostrarResultados()"><ion-icon name="eye"></ion-icon></button>
-      <button ion-fab color = "primary" (click) = "MostrarAbout()"><ion-icon name="contacts"></ion-icon></button>
-      <button ion-fab color = "danger" (click) = "Logout()"><ion-icon name="power"></ion-icon></button>
+      <button ion-fab color = "primary" (click) = "MostrarDatos(fab)"><ion-icon name="person"></ion-icon></button>
+      <button ion-fab color = "primary" (click) = "MostrarResultados(fab)"><ion-icon name="eye"></ion-icon></button>
+      <button ion-fab color = "primary" (click) = "MostrarAbout(fab)"><ion-icon name="contacts"></ion-icon></button>
+      <button ion-fab color = "danger" (click) = "Logout(fab)"><ion-icon name="power"></ion-icon></button>
     </ion-fab-list>
   </ion-fab>
 
@@ -37,7 +37,6 @@
           <div [ngClass] = "clsResultado">
             <p class = "mensaje" [ngStyle]="colorResultado">¡¡ {{resultado}} !!</p>
           </div>
-          <!--<button ion-button outline round color = "primary">Volver a Jugar</button>-->
           <ion-fab center [ngClass] = "clsResultadoBoton">
             <button ion-fab (click) = "Reiniciar()"><ion-icon name="refresh"></ion-icon></button>
           </ion-fab>

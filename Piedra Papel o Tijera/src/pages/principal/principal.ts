@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController } from 'ionic-angular';
+import { NavController, NavParams, AlertController, FabContainer } from 'ionic-angular';
 
 import { LoginPage } from '../login/login';
 import { AboutPage } from '../about/about';
+import { InformacionPage } from '../informacion/informacion';
+import { PartidasPage } from '../partidas/partidas';
 
 import { Jugador } from '../login/login';
 
@@ -62,27 +64,36 @@ export class PrincipalPage {
 
   //Referente al Menu
 
-  MostrarDatos() : void 
+  MostrarDatos(fab: FabContainer) : void 
   {
+    fab.close();
+
     console.log("Mostrar Datos del Jugador");
-    // this.navCtrl.push(PrincipalPage, {
-    //   Jugador : this.jugador,
-    // });
+    this.navCtrl.push(InformacionPage, {
+      Jugador : this.jugador,
+    });
   }
 
-  MostrarResultados() : void 
+  MostrarResultados(fab: FabContainer) : void 
   {
+    fab.close();
+
     console.log("Mostrar Resultados de Partidas");
-    // this.navCtrl.push(PrincipalPage);
+    this.navCtrl.push(PartidasPage);
   }
 
-  MostrarAbout() : void 
+  MostrarAbout(fab: FabContainer) : void 
   {
+    fab.close();
+
     console.log("Mostrar About");
     this.navCtrl.push(AboutPage);
   }
 
-  Logout() : void {
+  Logout(fab: FabContainer) : void
+  {
+    fab.close();
+
     let alert = this.alertCtrl.create({
       title: 'Cerrar Sesion...',
       message: '¿Desea Cerrar la Sesion?',
@@ -138,6 +149,16 @@ export class PrincipalPage {
     
     this.partida[this.resultado]++;
 
+    //Modifico al Jugador
+    if (this.resultado == "Victoria")
+      this.jugador.partidasGanadas++;
+    else if (this.resultado == "Empate")
+      this.jugador.partidasEmpatadas++;
+    else
+      this.jugador.partidasPerdidas++;
+
+    this.jugador.partidas++;
+
     console.log(this.resultado);
   }
 
@@ -159,6 +180,8 @@ export class PrincipalPage {
   {
     if (seleccion == "piedra")
     {
+      this.jugador.jugPiedra++;
+
       if (eleccionCPU == "piedra")
         return "Empate";
       else if (eleccionCPU == "papel")
@@ -168,6 +191,8 @@ export class PrincipalPage {
     }
     else if (seleccion == "papel")
      {
+      this.jugador.jugPapel++;
+
       if (eleccionCPU == "piedra")
         return "Victoria";
       else if (eleccionCPU == "papel")
@@ -177,6 +202,8 @@ export class PrincipalPage {
      }
      else
      {
+      this.jugador.jugTijera++;
+
       if (eleccionCPU == "piedra")
         return "Derrota";
       else if (eleccionCPU == "papel")

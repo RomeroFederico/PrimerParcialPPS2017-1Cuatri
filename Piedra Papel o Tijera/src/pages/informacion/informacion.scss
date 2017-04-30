@@ -1,0 +1,46 @@
+page-informacion {
+
+        ion-card-header {
+        top: 36%;
+        font-size: 2.0em;
+        width: 100%;
+        font-weight: bold;
+        color: black;
+    }
+
+    .miCard{
+        background-color: #9936A2;
+        color: white;
+        position: relative;
+        text-align: center;
+    }
+
+    .miClase{
+        background-image: url(../assets/images/fondo.jpg);     
+        background-size: cover;
+        width: 100%;
+        height: 100%;;
+    }
+
+    .txtPregunta {
+        font-size: 0.75em;
+        font-weight: bold;
+    }
+
+    .informacion-button {
+        width: 100%;
+        border-radius: 30px;
+        font-size: 0.9em;
+        border: 1px solid #fff;
+    }
+
+    .card-title {
+        position: absolute;
+        top: 36%;
+        font-size: 2.0em;
+        width: 100%;
+        font-weight: bold;
+        color: #fff;
+    }
+
+}

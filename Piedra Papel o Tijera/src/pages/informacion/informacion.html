@@ -1,0 +1,59 @@
+<ion-header>
+
+  <ion-navbar text-right color = "primary">
+    <ion-title>Datos de {{jugador.nombre}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding class = "miClase">
+
+  <ion-list>
+
+    <ion-item-group>
+
+      <ion-item-divider color="primary">Datos del jugador</ion-item-divider>
+
+      <ion-item>
+        <ion-icon name="game-controller-a" item-left></ion-icon>
+        Partidas Jugadas : 
+        <ion-badge item-right>{{jugador.partidas}}</ion-badge>
+      </ion-item>
+      <ion-item>
+        <ion-icon name="checkmark" item-left></ion-icon>
+        Partidas Ganadas : 
+        <ion-badge item-right>{{jugador.partidasGanadas}}</ion-badge>
+      </ion-item>
+      <ion-item>
+        <ion-icon name="code-working" item-left></ion-icon>
+        Partidas Empatadas : 
+        <ion-badge item-right>{{jugador.partidasEmpatadas}}</ion-badge>
+      </ion-item>
+      <ion-item>
+        <ion-icon name="nuclear" item-left></ion-icon>
+        Partidas Perdidas : 
+        <ion-badge item-right>{{jugador.partidasPerdidas}}</ion-badge>
+      </ion-item>
+      <ion-item>
+        <ion-icon name="cube" item-left></ion-icon>
+        Cant. Piedras Jugadas : 
+        <ion-badge item-right>{{jugador.jugPiedra}}</ion-badge>
+      </ion-item>
+      <ion-item>
+        <ion-icon name="hand" item-left></ion-icon>
+        Cant. Papel Jugadas : 
+        <ion-badge item-right>{{jugador.jugPapel}}</ion-badge>
+      </ion-item>
+      <ion-item>
+        <ion-icon name="cut" item-left></ion-icon>
+        Cant. Tijeras Jugadas : 
+        <ion-badge item-right>{{jugador.jugTijera}}</ion-badge>
+      </ion-item>
+      
+    </ion-item-group>
+
+  </ion-list>
+
+  <button ion-button block class = "informacion-button" color = "primary" (click) = "Volver()">Volver al Menu Principal</button>
+
+</ion-content>

@@ -9,6 +9,8 @@ import { AboutPage } from '../pages/about/about';
 import { InformacionPage } from '../pages/informacion/informacion';
 import { PartidasPage } from '../pages/partidas/partidas';
 
+import { JuegoService } from '../providers/juego-service';
+
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -36,6 +38,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     PartidasPage
   ],
   providers: [
+    JuegoService,
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler}

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController, FabContainer } from 'ionic-angular';
+import { NavController, NavParams, AlertController, FabContainer, ToastController } from 'ionic-angular';
 
 import { LoginPage } from '../login/login';
 import { AboutPage } from '../about/about';
@@ -8,9 +8,12 @@ import { PartidasPage } from '../partidas/partidas';
 
 import { Jugador } from '../login/login';
 
+import { JuegoService } from '../../providers/juego-service';
+
 @Component({
   selector: 'page-principal',
-  templateUrl: 'principal.html'
+  templateUrl: 'principal.html',
+  providers: [ToastController]
 })
 export class PrincipalPage {
 
@@ -39,6 +42,8 @@ export class PrincipalPage {
 
   resultado : string = "";
   mostrarResultado : boolean = null;
+  mostrarReiniciar1 : boolean = null;
+  mostrarReiniciar2 : boolean = null;
 
   //Animacion y Estetica
   clsImagen : string = "animated pulse infinite";
@@ -53,7 +58,8 @@ export class PrincipalPage {
   clsResultadoBoton : string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-              public alertCtrl : AlertController) 
+              public alertCtrl : AlertController, public toastCtrl : ToastController,
+              public juegoService : JuegoService) 
   {
     this.jugador = navParams.get('Jugador');
   }
@@ -127,7 +133,7 @@ export class PrincipalPage {
     if (this.mostrarResultado)
       return;
 
-    this.CamibiarEstadoBotones();
+    this.CambiarEstadoBotones();
     this.habilitar[seleccion] = true;
     this.clsImagen = "animated fadeOutUp infinite";
     this.clsImagenCPU = "animated fadeOutDown infinite";
@@ -149,20 +155,18 @@ export class PrincipalPage {
     
     this.partida[this.resultado]++;
 
-    //Modifico al Jugador
-    if (this.resultado == "Victoria")
-      this.jugador.partidasGanadas++;
-    else if (this.resultado == "Empate")
-      this.jugador.partidasEmpatadas++;
-    else
-      this.jugador.partidasPerdidas++;
+    //Modifico al Jugador.
+    this.ModificarJugador(seleccion);
 
-    this.jugador.partidas++;
+    //Guardo al jugador modificado y la partida.
+    //Solo se mostrara la opcion de reiniciar la partida si se terminan ambos procesos.
+    this.GuardarModificacionJugador();
+    this.GuardarPartida();
 
     console.log(this.resultado);
   }
 
-  CamibiarEstadoBotones(estado = null)
+  CambiarEstadoBotones(estado = null)
   {
     this.habilitar.piedra = estado;
     this.habilitar.papel = estado;
@@ -213,9 +217,66 @@ export class PrincipalPage {
      }
   }
 
+  ModificarJugador(seleccion)
+  {
+    if (this.resultado == "Victoria")
+      this.jugador.partidasGanadas++;
+    else if (this.resultado == "Empate")
+      this.jugador.partidasEmpatadas++;
+    else
+      this.jugador.partidasPerdidas++;
+
+    this.jugador.partidas++;
+  }
+
+  GuardarModificacionJugador()
+  {
+      this.juegoService.ModificarUsuario(this.jugador, this.jugador.idJugador)
+      .subscribe(
+        ok => {
+
+          this.mostrarReiniciar1 = true;
+
+          if (ok === false)
+            this.MostrarMensaje("No se pudo guardar los datos del jugador", true);
+        }, 
+        error => 
+        {
+          this.mostrarReiniciar1 = true;
+          this.MostrarMensaje("No se pudo guardar los datos del jugador", true);
+          console.error('Error: ' + error);
+        },
+        () => console.log('Guardar Datos Jugador Completed!')
+      );
+  }
+
+  GuardarPartida()
+  {
+    this.juegoService.GuardarResultados({
+      idJugador : this.jugador.idJugador,
+      estado : this.resultado
+    })
+      .subscribe(
+        ok => {
+
+          this.mostrarReiniciar2 = true;
+
+          if (ok === false)
+            this.MostrarMensaje("No se pudo guardar la partida", false);
+        }, 
+        error => 
+        {
+          this.mostrarReiniciar2 = true;
+          this.MostrarMensaje("No se pudo guardar la partida", false);
+          console.error('Error: ' + error);
+        },
+        () => console.log('Guardar Datos Partida Completed!')
+      );
+  }
+
   Reiniciar()
   {
-    this.CamibiarEstadoBotones(true);
+    this.CambiarEstadoBotones(true);
     this.CambiarEstadoBotonesCPU(true);
 
     this.clsImagen = "animated pulse infinite";
@@ -223,9 +284,21 @@ export class PrincipalPage {
     this.clsResultado = "";
     this.clsResultadoBoton = "";
 
+    this.mostrarReiniciar1 = null;
+    this.mostrarReiniciar2 = null;
     this.mostrarResultado = null;
 
     console.log("Nueva Partida");
+  }
+
+  MostrarMensaje(mensaje, posicionAbajo)
+  {
+    let toast = this.toastCtrl.create({
+      message: mensaje,
+      duration: 1000,
+      position: posicionAbajo == true? 'bottom' : 'middle'
+    });
+    toast.present();
   }
 
 }

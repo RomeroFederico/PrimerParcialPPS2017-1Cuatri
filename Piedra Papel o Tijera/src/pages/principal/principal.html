@@ -37,7 +37,7 @@
           <div [ngClass] = "clsResultado">
             <p class = "mensaje" [ngStyle]="colorResultado">¡¡ {{resultado}} !!</p>
           </div>
-          <ion-fab center [ngClass] = "clsResultadoBoton">
+          <ion-fab center [ngClass] = "clsResultadoBoton" *ngIf = "mostrarReiniciar1 && mostrarReiniciar2">
             <button ion-fab (click) = "Reiniciar()"><ion-icon name="refresh"></ion-icon></button>
           </ion-fab>
         </div>

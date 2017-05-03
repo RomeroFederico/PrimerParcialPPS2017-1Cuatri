@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, LoadingController } from 'ionic-angular';
 
+import { JuegoService } from '../../providers/juego-service';
+
 @Component({
   selector: 'page-partidas',
   templateUrl: 'partidas.html'
@@ -15,7 +17,8 @@ export class PartidasPage {
   loading;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, 
-              public loadingController : LoadingController)
+              public loadingController : LoadingController,
+              public juegoService : JuegoService)
   {
     this.TraerResultados();
   }
@@ -28,15 +31,42 @@ export class PartidasPage {
   {
     console.log("Trayendo resultados");
 
-    // Traer de la Base de Datos.
+    this.MostrarLoading();
 
-    this.partidas.Victorias.push({fecha : new Date().toLocaleDateString() + " " + new Date().toLocaleTimeString(), nombre : "Federico"});
-    this.partidas.Victorias.push({fecha : new Date().toLocaleDateString() + " " + new Date().toLocaleTimeString(), nombre : "Federico"});
-    this.partidas.Derrotas.push({fecha : new Date().toLocaleDateString() + " " + new Date().toLocaleTimeString(), nombre : "Federico"});
+    this.juegoService.LeerResultados()
+      .subscribe(
+        ok => {
 
-    // Si se pudo
+          this.loading.dismiss();
 
-    this.Seleccion("Victorias");
+          if (ok === false)
+            this.sinResultados = true;
+          else
+            this.OrganizarPartidas(ok);
+
+            this.Seleccion("Victorias");
+        }, 
+        error => 
+        {
+          this.loading.dismiss();
+          this.errorAlTraerResultados = true;
+          this.Seleccion("Victorias");
+          console.error('Error: ' + error);
+        },
+        () => console.log('Traer Partidas Completed!')
+      );
+  }
+
+  OrganizarPartidas(partidas)
+  {
+    partidas.forEach(element => {
+      if (element.estado == "Victoria")
+        this.partidas.Victorias.push(element);
+      else if (element.estado == "Empate")
+        this.partidas.Empates.push(element);
+      else
+        this.partidas.Derrotas.push(element);
+    });
   }
 
   MostrarLoading() 
@@ -59,6 +89,9 @@ export class PartidasPage {
   Seleccion(seleccion)
   {
     console.log("Se selecciono partidas " + seleccion);
+
+    if (this.errorAlTraerResultados)
+      return;
 
     if (this.partidas[seleccion].length == 0)
       this.sinResultados = true;

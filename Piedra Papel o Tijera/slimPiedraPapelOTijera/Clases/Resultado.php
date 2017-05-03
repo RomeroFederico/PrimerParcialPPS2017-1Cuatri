@@ -16,10 +16,20 @@
 
             $objetoAccesoDatos = AccesoDatos::dameUnObjetoAcceso();
 
-            $consulta = $objetoAccesoDatos->RetornarConsulta("SELECT j.nombre AS nombre, j.imagen AS imagen , r.estado AS estado , r.fecha AS fecha 
+            $consulta = $objetoAccesoDatos->RetornarConsulta("(SELECT j.nombre AS nombre, j.imagen AS imagen , r.estado AS estado , r.fecha AS fecha 
                                                               FROM pptpartidas AS r, pptjugadores AS j 
-                                                              WHERE j.idJugador = r.idJugador 
-                                                              ORDER BY fecha DESC LIMIT 10;");
+                                                              WHERE j.idJugador = r.idJugador AND r.estado = 'Victoria' 
+                                                              ORDER BY fecha DESC LIMIT 10)
+                                                              UNION
+                                                              (SELECT j.nombre AS nombre, j.imagen AS imagen , r.estado AS estado , r.fecha AS fecha 
+                                                              FROM pptpartidas AS r, pptjugadores AS j 
+                                                              WHERE j.idJugador = r.idJugador AND r.estado = 'Empate'  
+                                                              ORDER BY fecha DESC LIMIT 10)
+                                                              UNION
+                                                              (SELECT j.nombre AS nombre, j.imagen AS imagen , r.estado AS estado , r.fecha AS fecha 
+                                                              FROM pptpartidas AS r, pptjugadores AS j 
+                                                              WHERE j.idJugador = r.idJugador AND r.estado = 'Derrota' 
+                                                              ORDER BY fecha DESC LIMIT 10)");
 
             $consulta->execute();
 

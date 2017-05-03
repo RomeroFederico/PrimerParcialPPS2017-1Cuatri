@@ -16,7 +16,7 @@ export class JuegoService {
     headers.append('Content-Type', 'application/json');
     
     return this.http
-      .post('http://localhost/slimPiedraPapelOTijera/ws/administracion.php/login', body, { headers: headers })
+      .post('http://www.romerofederico.hol.es/slimPiedraPapelOTijera/ws/administracion.php/login', body, { headers: headers })
       .map(response => response.json());
   }
 
@@ -27,7 +27,7 @@ export class JuegoService {
     headers.append('Content-Type', 'application/json');
     
     return this.http
-      .post('http://localhost/slimPiedraPapelOTijera/ws/administracion.php/registro', body, { headers: headers })
+      .post('http://www.romerofederico.hol.es/slimPiedraPapelOTijera/ws/administracion.php/registro', body, { headers: headers })
       .map(response => response.json());
   }
 
@@ -38,13 +38,13 @@ export class JuegoService {
     headers.append('Content-Type', 'application/json');
     
     return this.http
-      .put('http://localhost/slimPiedraPapelOTijera/ws/administracion.php/usuario/' + idModificar, body, { headers: headers })
+      .put('http://www.romerofederico.hol.es/slimPiedraPapelOTijera/ws/administracion.php/usuario/' + idModificar, body, { headers: headers })
       .map(response => response.json());
   }
 
   LeerResultados()
   {
-    return this.http.get('http://localhost/slimPiedraPapelOTijera/ws/administracion.php/resultados')
+    return this.http.get('http://www.romerofederico.hol.es/slimPiedraPapelOTijera/ws/administracion.php/resultados')
       .map(response => response.json());
   }
 
@@ -55,7 +55,7 @@ export class JuegoService {
     headers.append('Content-Type', 'application/json');
     
     return this.http
-      .post('http://localhost/slimPiedraPapelOTijera/ws/administracion.php/resultados/agregar' , body, { headers: headers })
+      .post('http://www.romerofederico.hol.es/slimPiedraPapelOTijera/ws/administracion.php/resultados/agregar' , body, { headers: headers })
       .map(response => response.json());
   }
 }

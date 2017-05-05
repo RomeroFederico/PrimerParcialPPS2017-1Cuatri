@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, AlertController, FabContainer, ToastController } from 'ionic-angular';
 
+import { Vibration } from '@ionic-native/vibration';
+import { NativeAudio } from '@ionic-native/native-audio';
+
 import { LoginPage } from '../login/login';
 import { AboutPage } from '../about/about';
 import { InformacionPage } from '../informacion/informacion';
@@ -13,7 +16,7 @@ import { JuegoService } from '../../providers/juego-service';
 @Component({
   selector: 'page-principal',
   templateUrl: 'principal.html',
-  providers: [ToastController]
+  providers: [ToastController, Vibration, NativeAudio]
 })
 export class PrincipalPage {
 
@@ -57,11 +60,18 @@ export class PrincipalPage {
   clsResultado : string;
   clsResultadoBoton : string;
 
+  exitoCargarSonidoVictoria : boolean = false;
+  exitoCargarSonidoEmpate : boolean = false;
+  exitoCargarSonidoDerrota : boolean = false;
+
   constructor(public navCtrl: NavController, public navParams: NavParams,
               public alertCtrl : AlertController, public toastCtrl : ToastController,
-              public juegoService : JuegoService) 
+              public juegoService : JuegoService,
+              public vibration : Vibration, public native : NativeAudio) 
   {
     this.jugador = navParams.get('Jugador');
+
+    this.CargarSonidos();
   }
 
   ionViewDidLoad() {
@@ -115,6 +125,7 @@ export class PrincipalPage {
         text: 'Ok',
         handler: () => {
           console.log('Cerrando Sesion.');
+          this.EliminarSonidos();
           this.navCtrl.setRoot(LoginPage, {}, {
           animate: true, 
           direction: "backward"
@@ -154,6 +165,9 @@ export class PrincipalPage {
     this.colorResultado = this.coloresParaResultados[this.resultado];
     
     this.partida[this.resultado]++;
+
+    //Reproduzco sonido y vibracion.
+    this.ReproducirMultimedia();
 
     //Modifico al Jugador.
     this.ModificarJugador(seleccion);
@@ -299,6 +313,70 @@ export class PrincipalPage {
       position: posicionAbajo == true? 'bottom' : 'middle'
     });
     toast.present();
+  }
+
+  CargarSonidos()
+  {
+    this.native.preloadSimple('Victoria', 'assets/sound/Victoria.mp3')
+      .then(
+        resp => {
+          this.exitoCargarSonidoVictoria = true;
+          console.log("Exito al cargar sonido 'victoria'. " + resp);
+        },
+        err => { console.log("Error al cargar el sonido 'victoria'. " + err); });
+
+    this.native.preloadSimple('Empate', 'assets/sound/Empate.mp3')
+      .then(
+        resp => {
+          this.exitoCargarSonidoEmpate = true;
+          console.log("Exito al cargar sonido 'empate'. " + resp);
+        },
+        err => { console.log("Error al cargar el sonido 'empate'. " + err); });
+
+    this.native.preloadSimple('Derrota', 'assets/sound/Derrota.mp3')
+      .then(
+        resp => {
+          this.exitoCargarSonidoDerrota = true;
+          console.log("Exito al cargar sonido 'derrota'. " + resp);
+        },
+        err => { console.log("Error al cargar el sonido 'derrota'. " + err); });
+  }
+
+  ReproducirSonido(sonido)
+  {
+    if (!(this.exitoCargarSonidoVictoria && this.exitoCargarSonidoEmpate && this.exitoCargarSonidoDerrota))
+    {
+      console.log("No se pudo reproducir el sonido por que no se cargo. ");
+      return;
+    }
+    this.native.play(sonido, () => console.log(sonido + " se termino de reproducir."))
+      .then(
+        resp => {
+          console.log("Exito al reproducir el sonido. " + resp);
+        },
+        err => { console.log("Error al reproducir el sonido. " + err); });
+  }
+
+  EliminarSonidos()
+  {
+    if (this.exitoCargarSonidoVictoria)
+      this.native.unload("Victoria");
+    if (this.exitoCargarSonidoEmpate)
+      this.native.unload("Empate");
+    if (this.exitoCargarSonidoDerrota)
+      this.native.unload("Derrota");
+  }
+
+  ReproducirMultimedia()
+  {
+    this.ReproducirSonido(this.resultado);
+
+    if (this.resultado == "Victoria")
+      this.vibration.vibrate(500);
+    else if (this.resultado == "Empate")
+      this.vibration.vibrate(1000);
+    else
+      this.vibration.vibrate([300,300,300]);
   }
 
 }

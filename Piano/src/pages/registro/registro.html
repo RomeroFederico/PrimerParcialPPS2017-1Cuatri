@@ -1,0 +1,27 @@
+<ion-header>
+
+  <ion-navbar color = "primary" text-right>
+    <ion-title>Registro de Jugador</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding class = "miClase">
+
+  <div class = "centrar">
+  <ion-row>
+  <ion-col>
+    <ion-item>
+      <ion-label stacked>Nombre</ion-label>
+      <ion-input type="text" [(ngModel)]="jugador.nombre" text-center></ion-input>
+    </ion-item>
+    <div padding>
+	    <button ion-button block color = "primary" (click) = "RegistrarUsuario()" class = "registro-button">Registrar</button>
+      <button ion-button block color = "primary" (click) = "Cancelar()" class = "registro-button">Cancelar</button>
+    </div>
+  </ion-col>
+  </ion-row>
+  </div>
+
+</ion-content>

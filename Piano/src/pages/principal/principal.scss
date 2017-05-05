@@ -1,0 +1,71 @@
+page-principal {
+
+    .miClase
+    {
+        scroll-content {
+            display: flex;
+            flex-direction: column;
+        }
+ 
+        ion-grid {
+            padding: 0;
+            height: 100%;
+        }
+ 
+        ion-row {
+            flex: 1;
+        }
+
+        background-image: url(../assets/images/fondo.jpg);     
+        background-size: cover;
+        width: 100%;
+        height: 100%;;
+    }
+
+    .columnaCentrada{
+        display: flex;
+        align-content: center;
+        align-items: center;
+
+        img{
+            height:100%;
+            width: auto;
+            display: block;
+            margin: auto;
+        }
+    }
+
+    .columnaCentradaCPU{
+        display: flex;
+        align-content: center;
+        align-items: center;
+
+        img{
+            height:100%;
+            width: auto;
+            display: block;
+            margin: auto;
+            opacity: 0.3;
+        }
+    }
+
+    .mensaje{
+        font-size: 30px;
+        font-weight: bold;
+    }
+
+    .resultados{
+        font-size: 15px;
+        font-weight: bold;
+        color: white;
+    }
+
+    .login-button {
+        width: 100%;
+        border-radius: 30px;
+        font-size: 0.9em;
+        border: 1px solid #fff;
+        color: white;
+    }
+
+}

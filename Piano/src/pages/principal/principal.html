@@ -1,0 +1,67 @@
+<ion-header>
+
+  <ion-navbar color = "primary" text-center>
+    <ion-title>Bienvenido {{this.jugador.nombre}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding class = "miClase">
+
+  <ion-fab top right edge>
+    <button ion-fab (click) = 'MostrarAbout()'><ion-icon name="contacts"></ion-icon></button>
+  </ion-fab>
+
+  <ion-fab top left edge>
+    <button ion-fab (click) = 'Logout()'><ion-icon name="power"></ion-icon></button>
+  </ion-fab>
+
+  <ion-grid class = "centrar">
+    <ion-row>
+      <ion-col>
+        <button ion-button block color = "primary" class = 'login-button' (click) = "Grabar()" *ngIf = "grabar" disabled={{inhabilitarBotones}}>Grabar</button>
+        <button ion-button block color = "primary" class = 'login-button' (click) = "PararGrabacion()" *ngIf = "pararGrabacion" disabled={{inhabilitarBotones}}>Parar Grabacion</button>
+        <button ion-button block color = "primary" class = 'login-button' (click) = "Reproducir()" *ngIf = "reproducir" disabled={{inhabilitarBotones}}>Reproducir</button>
+      </ion-col>
+      <ion-col>
+        <button ion-button block color = "primary" class = 'login-button' (click) = "ReproducirMelodiaGrabada()">Reproducir Melodia Grabada</button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col class = "columnaCentrada">
+          <img src="assets/images/encender.png" (click) = "Tocar('encender')"/>
+      </ion-col>
+      <ion-col class = "columnaCentrada">
+          <img src="assets/images/motor.png" (click) = "Tocar('motor')"/>
+      </ion-col>
+      <ion-col class = "columnaCentrada">
+          <img src="assets/images/puerta.png" (click) = "Tocar('puerta')"/>
+      </ion-col>
+      <ion-col class = "columnaCentrada">
+          <img src="assets/images/rueda.png" (click) = "Tocar('rueda')"/>
+      </ion-col>
+      <ion-col class = "columnaCentrada">
+          <img src="assets/images/velocidad.png" (click) = "Tocar('velocidad')"/>
+      </ion-col>
+      <ion-col class = "columnaCentrada">
+          <img src="assets/images/velocidadmaxima.png" (click) = "Tocar('velocidadmaxima')"/>
+      </ion-col>
+      <ion-col class = "columnaCentrada">
+          <img src="assets/images/bocina.png" (click) = "Tocar('bocina')"/>
+      </ion-col>
+      <ion-col class = "columnaCentrada">
+          <img src="assets/images/choque.png" (click) = "Tocar('choque')"/>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>
+
+<ion-footer style="background-color: crimson; height : 40px;" text-center>
+  <ion-toolbar transparent>
+    <div *ngIf = "mostrarMensaje">
+      <p class = "resultados">Mensaje</p>
+    </div>
+  </ion-toolbar>
+</ion-footer>

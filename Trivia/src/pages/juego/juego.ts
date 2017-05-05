@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
 import { TriviaService } from '../../providers/trivia-service';
 import { ToastController } from 'ionic-angular';
+import { Vibration } from '@ionic-native/vibration';
+import { NativeAudio } from '@ionic-native/native-audio';
 
 import { ResultadoPage } from '../resultado/resultado';
 
@@ -19,7 +21,7 @@ export class Pregunta
 @Component({
   selector: 'page-juego',
   templateUrl: 'juego.html',
-  providers: [ToastController]
+  providers: [ToastController, Vibration, NativeAudio]
 })
 
 export class JuegoPage {
@@ -35,15 +37,21 @@ export class JuegoPage {
 
   loading;
 
+  exitoCargarSonidoCorrecto : boolean = false;
+  exitoCargarSonidoError : boolean = false;
+
   constructor(public navCtrl: NavController, public navParams: NavParams, 
               public toastCtrl: ToastController, public alertCtrl : AlertController, public loadingController : LoadingController,
-              public triviaService : TriviaService)
+              public triviaService : TriviaService,
+              public vibration : Vibration, public native : NativeAudio)
   {
     this.jugador = navParams.get('Jugador');
 
     this.preguntas = new Array<Pregunta>();
 
     this.TraerPreguntas();
+
+    this.CargarSonidos();
   }
 
   ionViewDidLoad() {
@@ -107,12 +115,18 @@ export class JuegoPage {
 
     if (opcion == this.preguntas[this.preguntaActual].correcta)
     {
+      this.ReproducirSonido("correcto");
+      this.vibration.vibrate(900);
+
       this.puntajePartida++;
       console.log("Correcto");
       toast.setMessage("Correcto");
     }
     else
     {
+      this.ReproducirSonido("error");
+      this.vibration.vibrate([300,300,300]);
+
       console.log("Incorrecto");
       toast.setMessage("Incorrecto");
     }
@@ -187,6 +201,8 @@ export class JuegoPage {
 
   MostrarResultado()
   {
+    this.EliminarSonidos();
+
     this.navCtrl.setRoot(ResultadoPage, {
       Jugador : this.jugador,
       Puntaje : this.puntajePartida,
@@ -257,7 +273,50 @@ export class JuegoPage {
 
   Volver()
   {
+    this.EliminarSonidos();
     this.navCtrl.pop();
+  }
+
+  CargarSonidos()
+  {
+    this.native.preloadSimple('correcto', 'assets/sound/Correcto.mp3')
+      .then(
+        resp => {
+          this.exitoCargarSonidoCorrecto = true;
+          console.log("Exito al cargar sonido 'correcto'. " + resp);
+        },
+        err => { console.log("Error al cargar el sonido 'correcto'. " + err); });
+
+    this.native.preloadSimple('error', 'assets/sound/Error.mp3')
+      .then(
+        resp => {
+          this.exitoCargarSonidoError = true;
+          console.log("Exito al cargar sonido 'error'. " + resp);
+        },
+        err => { console.log("Error al cargar el sonido 'error'. " + err); });
+  }
+
+  ReproducirSonido(sonido)
+  {
+    if (!(this.exitoCargarSonidoCorrecto && this.exitoCargarSonidoError))
+    {
+      console.log("No se pudo reproducir el sonido por que no se cargo. ");
+      return;
+    }
+    this.native.play(sonido, () => console.log(sonido + " se termino de reproducir."))
+      .then(
+        resp => {
+          console.log("Exito al reproducir el sonido. " + resp);
+        },
+        err => { console.log("Error al reproducir el sonido. " + err); });
+  }
+
+  EliminarSonidos()
+  {
+    if (this.exitoCargarSonidoCorrecto)
+      this.native.unload("correcto");
+    if (this.exitoCargarSonidoError)
+      this.native.unload("error");
   }
 
 }

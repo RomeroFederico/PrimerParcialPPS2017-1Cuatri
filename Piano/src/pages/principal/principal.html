@@ -20,9 +20,7 @@
   <ion-grid class = "centrar">
     <ion-row>
       <ion-col>
-        <button ion-button block color = "primary" class = 'login-button' (click) = "Grabar()" *ngIf = "grabar" disabled={{inhabilitarBotones}}>Grabar</button>
-        <button ion-button block color = "primary" class = 'login-button' (click) = "PararGrabacion()" *ngIf = "pararGrabacion" disabled={{inhabilitarBotones}}>Parar Grabacion</button>
-        <button ion-button block color = "primary" class = 'login-button' (click) = "Reproducir()" *ngIf = "reproducir" disabled={{inhabilitarBotones}}>Reproducir</button>
+        <button ion-button block color = "primary" class = 'login-button' (click) = "Accion()">{{accionBoton}}</button>
       </ion-col>
       <ion-col>
         <button ion-button block color = "primary" class = 'login-button' (click) = "ReproducirMelodiaGrabada()">Reproducir Melodia Grabada</button>
@@ -60,8 +58,8 @@
 
 <ion-footer style="background-color: crimson; height : 40px;" text-center>
   <ion-toolbar transparent>
-    <div *ngIf = "mostrarMensaje">
-      <p class = "resultados">Mensaje</p>
+    <div>
+      <p class = "resultados">{{mensaje}}</p>
     </div>
   </ion-toolbar>
 </ion-footer>

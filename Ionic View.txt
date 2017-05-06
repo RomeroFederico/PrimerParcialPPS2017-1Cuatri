@@ -1,0 +1,3 @@
+Trivia -> 6e6525a9
+Piedra, Papel o Tijera -> d6f2575c
+Piano -> 79c085e5

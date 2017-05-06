@@ -7,6 +7,8 @@ import { RegistroPage } from '../pages/registro/registro';
 import { AboutPage } from '../pages/about/about';
 import { PrincipalPage } from '../pages/principal/principal';
 
+import { PianoService } from '../providers/piano-service';
+
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -30,6 +32,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     PrincipalPage
   ],
   providers: [
+    PianoService,
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler}

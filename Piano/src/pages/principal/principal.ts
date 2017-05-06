@@ -21,6 +21,8 @@ export class PrincipalPage {
   secuencia : Array<string>;
   posicion = 0;
 
+  melodia = "";
+
   inhabilitarBotones : boolean = null;
 
   grabar : boolean = true;
@@ -62,12 +64,18 @@ export class PrincipalPage {
 
   MostrarAbout() : void 
   {
+    if (this.inhabilitarBotones == true)
+      return;
+
     console.log("Mostrar About");
     this.navCtrl.push(AboutPage);
   }
 
   Logout() : void
   {
+    if (this.inhabilitarBotones == true)
+      return;
+
     let alert = this.alertCtrl.create({
       title: 'Cerrar Sesion...',
       message: '¿Desea Cerrar la Sesion?',
@@ -142,7 +150,7 @@ export class PrincipalPage {
     if (this.accionBoton == "Grabar")
     {
       console.log("Comienzo la grabacion");
-
+      this.melodia = "";
       this.grabar = false;
       this.pararGrabacion = true;
       this.accionBoton = "Parar Grabacion";
@@ -187,14 +195,14 @@ export class PrincipalPage {
     console.log(this.secuencia);
 
     this.mensaje = "Reproduciendo grabacion";
-
-    var melodia = "";
     
     this.secuencia.forEach(element => {
-      melodia += element + "-";
+      this.melodia += element  + "-";
     });
 
-    console.log(melodia);
+    this.melodia = this.melodia.substr(0, this.melodia.length - 1);
+
+    console.log(this.melodia);
 
     this.posicion = 0;
     this.melodiaFinalizada = false;

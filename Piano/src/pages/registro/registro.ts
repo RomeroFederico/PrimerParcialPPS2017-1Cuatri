@@ -3,6 +3,10 @@ import { NavController, NavParams, AlertController, LoadingController } from 'io
 
 import { Jugador } from '../login/login';
 
+import { PrincipalPage } from '../principal/principal';
+
+import { PianoService } from '../../providers/piano-service';
+
 @Component({
   selector: 'page-registro',
   templateUrl: 'registro.html'
@@ -14,7 +18,8 @@ export class RegistroPage {
   loading;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-              public alertCtrl : AlertController, public loadingController : LoadingController) 
+              public alertCtrl : AlertController, public loadingController : LoadingController,
+              public pianoService : PianoService) 
   {
     this.jugador = navParams.get('Jugador');
   }
@@ -28,13 +33,38 @@ export class RegistroPage {
     if (!this.ValidarNombreJugador())
       return;
 
-    //Si usuario no existe en la Base de Datos, registro.
-    this.Login(this.jugador);
+    this.MostrarLoading();
+
+    this.pianoService.AgregarUsuario({nombre : this.jugador.nombre})
+      .subscribe(
+        ok => {
+
+          this.loading.dismiss();
+
+          this.MostrarMensaje(ok.exito? "Informacion" : "Error", ok.mensaje);
+          if (ok.exito == true)
+            this.Login(ok.jugador);
+        }, 
+        error => 
+        {
+          this.loading.dismiss();
+          this.MostrarMensaje("Error", "Ha ocurrido un error, vuelva a intentarlo.");
+          console.error('Error: ' + error);
+        },
+        () => console.log('Registro Completed!')
+      );
   }
 
   Login(jugador): void
   {
-    console.log("Iniciando sesion para el jugador " + this.jugador.nombre);
+    console.log("Iniciando sesion para el jugador " + this.jugador.nombre)
+    
+    this.navCtrl.setRoot(PrincipalPage, {
+      Jugador : jugador
+    }, {
+      animate: true, 
+      direction: "forward"
+    });
   }
 
   Cancelar() : void {

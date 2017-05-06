@@ -5,17 +5,18 @@ import { AlertController, LoadingController } from 'ionic-angular';
 import { RegistroPage } from '../registro/registro';
 import { PrincipalPage } from '../principal/principal';
 
+import { PianoService } from '../../providers/piano-service';
+
 export class Jugador {
     constructor(public idJugador : number = 1, 
-                public nombre : string = "",
-                public tieneArchivo : boolean = false)
+                public nombre : string = "")
     {}
 }
 
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html',
-  providers : [AlertController]
+  providers : [AlertController, PianoService]
 })
 export class LoginPage {
 
@@ -23,7 +24,8 @@ export class LoginPage {
   loading;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, 
-              private alertCtrl: AlertController, public loadingController : LoadingController)
+              private alertCtrl: AlertController, public loadingController : LoadingController,
+              public pianoService : PianoService)
   {
   }
 
@@ -55,11 +57,31 @@ export class LoginPage {
     if (!this.ValidarNombreJugador())
       return;
 
-    //Validar con Base de Datos
-    if (this.jugador.nombre == "Federico")
-      this.Login();
-    else
-      this.MostrarMensaje("Error", "Usuario invalido");
+    this.MostrarLoading();
+
+    this.pianoService.BuscarUsuario({nombre : this.jugador.nombre})
+      .subscribe(
+        ok => {
+
+          this.loading.dismiss();
+
+          if (ok.exito == true)
+          {
+            this.jugador = ok.usuario;
+
+            this.Login();
+          }
+          else
+            this.MostrarMensaje("Error", ok.mensaje);
+        }, 
+        error => 
+        {
+          this.loading.dismiss();
+          this.MostrarMensaje("Error", "Ha ocurrido un error, vuelva a intentarlo.");
+          console.error('Error: ' + error);
+        },
+        () => console.log('Alta Completed!')
+      );
   }
 
   MostrarMensaje(titulo, mensaje)
